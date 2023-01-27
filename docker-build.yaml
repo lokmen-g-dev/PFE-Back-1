@@ -1,0 +1,32 @@
+---
+- name: Build and push Docker images
+  hosts: all
+  become: yes
+  
+  tasks:
+ 
+  - name: Copy directory from Ansible server to remote host
+    copy:
+      src: /var/lib/awx/projects/_66__reactback/
+      dest: /tmp/react_back/
+  
+  
+  - name: Build the Docker image
+    shell: cd /tmp/react_back/ && docker build . -t reactback/image
+     
+    
+  - name: Tag the image
+    shell: docker tag reactback/image beffa/project_pfe-2022:react_backV1.0
+  
+  - name: Push the image to Docker Hub
+    shell: docker push beffa/project_pfe-2022:react_backV1.0
+    
+
+  #remove all local images
+  - name: remove local images
+    shell: docker rmi -f $(docker images -aq)  
+    
+  - name: Delete Directory
+    file:
+      path: /tmp/react_back/
+      state: absent
