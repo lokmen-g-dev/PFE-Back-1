@@ -24,7 +24,7 @@
 
   #remove all local images
   - name: remove local images
-    shell: docker rmi -f $(docker images -aq)  
+    shell: docker rmi $(docker images -aq)  -f
     
   - name: Delete Directory
     file:
