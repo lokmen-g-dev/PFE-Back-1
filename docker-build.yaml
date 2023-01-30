@@ -18,10 +18,7 @@
   
   - name: Push the image to Docker Hub
     shell: docker push beffa/project_pfe-2022:react_backV1.0
-    
-  - name: remove local images
-    shell: docker rmi $(docker images -aq)  -f
-    
+        
   - name: Delete Directory
     file:
       path: /tmp/react_back/
