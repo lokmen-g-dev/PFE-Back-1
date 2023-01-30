@@ -14,11 +14,10 @@
     shell: cd /tmp/react_back/ && docker build . -t reactback/image 
     
   - name: Tag the image
-    shell: docker tag reactback/image beffa/project_pfe-2022:react_backV1.0
+    shell: docker tag reactback/image beffa/project_pfe-2022:react_backV1
   
   - name: Push the image to Docker Hub
-    shell: docker push beffa/project_pfe-2022:react_backV1.0
-        
+    shell: docker push beffa/project_pfe-2022:react_backV1
   - name: Delete Directory
     file:
       path: /tmp/react_back/
