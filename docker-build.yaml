@@ -5,6 +5,7 @@
   
   tasks:
  
+ 
   - name: Copy directory from Ansible server to remote host
     copy:
       src: /var/lib/awx/projects/_66__reactback/
