@@ -12,7 +12,7 @@
 
   - name: Clone repository
     shell: |
-      git clone https://github.com/BenAmor1/PFE-Back.git
+      git clone https://github.com/BenAmor1/PFE-Back.git /PFE-Back
     when: repo_stat.stat.exists == False
 
   - name: Pull repository
