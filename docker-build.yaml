@@ -4,22 +4,33 @@
   become: yes
   
   tasks:
- 
- 
-  - name: Copy directory from Ansible server to remote host
-    copy:
-      src: /var/lib/awx/projects/_66__reactback/
-      dest: /tmp/react_back/
-  
-  - name: Build the Docker image
-    shell: cd /tmp/react_back/ && docker build . -t reactback/image 
+   
+  - name: Check if directory exists
+    stat:
+      path: /PFE-Back
+    register: repo_stat
+
+  - name: Clone repository
+    shell: |
+      git clone https://github.com/BenAmor1/PFE-Back.git
+    when: repo_stat.stat.exists == False
+
+  - name: Pull repository
+    shell: |
+      cd /PFE-Back
+      git pull 
+    when: repo_stat.stat.exists == True
     
+  - name: Build the Docker image
+    shell: | 
+      cd /PFE-Back
+      docker build . -t reactback/image
+   
   - name: Tag the image
-    shell: docker tag reactback/image beffa/project_pfe-2022:react_backV1
+    shell: | 
+      cd /PFE-Back
+      docker tag reactback/image beffa/project_pfe-2022:react_backV1
   
   - name: Push the image to Docker Hub
     shell: docker push beffa/project_pfe-2022:react_backV1
-  - name: Delete Directory
-    file:
-      path: /tmp/react_back/
-      state: absent
+    
